@@ -3,13 +3,13 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql_goodman
+    container_name: ${CONTAINER_NAME}
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db_goodman
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - '3306:3306'
     volumes:
@@ -17,3 +17,4 @@ services:
 
 volumes:
   mysql_data:
+  
