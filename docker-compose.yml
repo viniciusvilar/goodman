@@ -1,20 +1,12 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: ${CONTAINER_NAME}
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+  postgres:
+    image: postgres:latest
+    container_name: ${CONTAINER_DB_NAME}
     ports:
-      - '3306:3306'
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-volumes:
-  mysql_data:
-  
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${CONTAINER_DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
