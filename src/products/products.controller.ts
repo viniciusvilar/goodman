@@ -7,9 +7,9 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post()
+  @Post("/create")
   create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+    return this.productsService.create(createProductDto)
   }
 
   @Get()
@@ -32,3 +32,7 @@ export class ProductsController {
     return this.productsService.remove(+id);
   }
 }
+function Res(): (target: ProductsController, propertyKey: "create", parameterIndex: 1) => void {
+  throw new Error('Function not implemented.');
+}
+

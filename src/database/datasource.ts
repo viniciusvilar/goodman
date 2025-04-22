@@ -12,4 +12,5 @@ export default new DataSource({
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     migrations: [__dirname + '/migrations/*.ts'],
     migrationsTableName: "custom_migration_table",
+    synchronize: false,
 })
