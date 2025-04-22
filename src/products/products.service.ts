@@ -4,6 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { error } from 'console';
 
 @Injectable()
 export class ProductsService {
@@ -16,19 +17,54 @@ export class ProductsService {
     return await this.productRepository.save(product);
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll(): Promise<Product[]> {
+    return await this.productRepository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(idProduct: number): Promise<Product | null> {
+    const product = this.productRepository.findOneBy({
+      id: idProduct
+    })
+    return product
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+    const product = await this.findOne(id);
+  
+    if (!product) {
+      throw new Error("Produto not exists!");
+    }
+  
+    const updatedProduct = this.productRepository.merge(product, updateProductDto);
+    return await this.productRepository.save(updatedProduct);
+  }
+  
+
+  async remove(id: number) {
+    const product = await this.findOne(id)
+    if (!product) {
+      throw new Error("Product not exists!")
+    }
+    if (product.active) {
+      product.active = false
+      await this.productRepository.save(product)
+      return product
+    }
+    
+    throw new Error("Product alreadys false!")
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async active(id: number) {
+    const product = await this.findOne(id)
+    if (!product) {
+      throw new Error("Product not exists!")
+    }
+    if (!product.active) {
+      product.active = true
+      await this.productRepository.save(product)
+      return product
+    }
+    
+    throw new Error("Product alreadys true!")
   }
 }

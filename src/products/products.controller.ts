@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Res, Put } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -26,22 +26,76 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
-    return "this.productsService.findAll()";
+  async findAll(@Res() res : Response) {
+    try {
+      const products = await this.productsService.findAll();
+      return res.status(HttpStatus.OK).json({
+        data: products
+      })
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        data: error.message
+      })
+    }
+    
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const product = await this.productsService.findOne(+id)
+      return res.status(HttpStatus.OK).json({
+        data: product
+      })
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        data: error.message
+      })
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+  async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto,@Res() res: Response) {
+    try {
+      const updatedProduct = await this.productsService.update(+id, updateProductDto);
+      return res.status(HttpStatus.OK).json({
+        message: 'Produto atualizado com sucesso',
+        data: updatedProduct,
+      });
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'Erro ao atualizar produto',
+        error: error.message,
+      });
+    }
   }
 
+
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  async remove(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const product = await this.productsService.remove(+id)
+      return res.status(HttpStatus.OK).json({
+        data: product
+      })
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        data: error.message
+      })
+    }
+  }
+
+  @Put(':id')
+  async active(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const product = await this.productsService.active(+id)
+      return res.status(HttpStatus.OK).json({
+        data: product
+      })
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        data: error.message
+      })
+    }
   }
 }
