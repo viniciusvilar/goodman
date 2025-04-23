@@ -1,10 +1,13 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
+@Entity()
 export class Unit {
     @PrimaryGeneratedColumn()
     id: Number
-    @Column({unique: true})
+    @Column()
     name: String
+    @Column({unique: true})
+    code: String
     @Column({default: true})
     active: Boolean
 }
