@@ -8,8 +8,10 @@ import { UpdateUnitDto } from './dto/update-unit.dto';
 @Injectable()
 export class UnitService {
 
-  @InjectRepository(Unit)
-  private readonly unitRepository : Repository<Unit>
+  constructor(
+    @InjectRepository(Unit)
+    private readonly unitRepository: Repository<Unit>,
+  ) {}
 
   async create(createUnitDto: CreateUnitDto): Promise<Unit> {
     const unit = this.unitRepository.create(createUnitDto)
@@ -22,6 +24,14 @@ export class UnitService {
 
   async findOne(id: number): Promise<Unit | null> {
     const unit = await this.unitRepository.findOneBy({id})
+    return unit
+  }
+
+  async findByCode(unitCode: string): Promise<Unit | null> {
+    const unit = await this.unitRepository.findOneBy({
+      code: unitCode
+    })
+
     return unit
   }
 

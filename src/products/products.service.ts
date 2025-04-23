@@ -5,15 +5,31 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { error } from 'console';
+import { UnitService } from 'src/unit/unit.service';
 
 @Injectable()
 export class ProductsService {
   
   @InjectRepository(Product)
   private readonly productRepository : Repository<Product>
+
+  constructor(private readonly unitService: UnitService) {}
   
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const product = this.productRepository.create(createProductDto)
+    const { unit: unitCode, ...rest} = createProductDto
+
+    const unit = await this.unitService.findByCode(unitCode)
+
+    if (!unit) {
+      throw new Error("Unidade não encontrada")
+    }
+
+    const product = this.productRepository.create({
+      ...rest,
+      unit
+    })
+    
+
     return await this.productRepository.save(product);
   }
 
@@ -29,14 +45,32 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
-    const product = await this.findOne(id);
+    const { unit: unitCode, ...rest } = updateProductDto;
+  
+    const product = await this.productRepository.findOne({
+      where: { id },
+      relations: ['unit'],
+    });
   
     if (!product) {
-      throw new Error("Produto not exists!");
+      throw new Error('Produto não encontrado');
     }
   
-    const updatedProduct = this.productRepository.merge(product, updateProductDto);
-    return await this.productRepository.save(updatedProduct);
+    // Se o DTO tiver a unidade, atualiza também
+    if (unitCode) {
+      const unit = await this.unitService.findByCode(unitCode);
+  
+      if (!unit) {
+        throw new Error('Unidade não encontrada');
+      }
+  
+      product.unit = unit;
+    }
+  
+    // Atualiza os demais campos
+    Object.assign(product, rest);
+  
+    return await this.productRepository.save(product);
   }
   
 

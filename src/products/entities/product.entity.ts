@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Unit } from "src/unit/entities/unit.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
 export class Product {
@@ -14,8 +15,8 @@ export class Product {
     @Column()
     additionalCode: String
 
-    @Column()
-    unit: String
+    @ManyToOne(() => Unit, { eager: true })
+    unit: Unit
 
     @Column()
     price: Number
