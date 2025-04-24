@@ -1,15 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { Response } from 'express';
 
 @Controller('v1/person')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
   @Post("/create")
-  create(@Body() createPersonDto: CreatePersonDto) {
-    return this.personService.create(createPersonDto)
+  async create(@Body() createPersonDto: CreatePersonDto, @Res() res : Response) {
+    try {
+      const person = await this.personService.create(createPersonDto)
+      return res.status(HttpStatus.OK).json({
+        message: "Pessoa criada com sucesso",
+        data: person
+      })
+    } catch (error) {
+      console.error("Erro ao criar pessoa ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao criar pessoa",
+        data: error.message
+      })
+    }
   }
 
   @Get()
