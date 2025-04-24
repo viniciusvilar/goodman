@@ -12,7 +12,7 @@ export class PersonController {
   async create(@Body() createPersonDto: CreatePersonDto, @Res() res : Response) {
     try {
       const person = await this.personService.create(createPersonDto)
-      return res.status(HttpStatus.OK).json({
+      return res.status(HttpStatus.CREATED).json({
         message: "Pessoa criada com sucesso",
         data: person
       })
@@ -26,13 +26,35 @@ export class PersonController {
   }
 
   @Get()
-  findAll() {
-    return this.personService.findAll();
+  async findAll(@Res() res : Response) {
+    try {
+      const persons = await this.personService.findAll()
+      return res.status(HttpStatus.OK).json({
+        data: persons
+      })
+    } catch (error) {
+      console.error("Erro ao listar pessoas ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao listar pessoas",
+        data: error.message
+      })
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.personService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const person = await this.personService.findOne(+id)
+      return res.status(HttpStatus.OK).json({
+        data: person
+      })
+    } catch (error) {
+      console.error("Erro ao listar pessoa ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao listar pessoa",
+        data: error.message
+      })
+    }
   }
 
   @Patch(':id')

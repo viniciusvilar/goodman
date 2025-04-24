@@ -39,12 +39,13 @@ export class PersonService {
 
   }
 
-  findAll() {
-    return `This action returns all person`;
+  async findAll() : Promise<Person[]> {
+    return await this.personRepository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  async findOne(id: number) : Promise<Person | null> {
+    const person = await this.personRepository.findOneBy({ id })
+    return person
   }
 
   update(id: number, updatePersonDto: UpdatePersonDto) {
