@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Put } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { Response } from 'express';
+import { error } from 'console';
 
 @Controller('v1/person')
 export class PersonController {
@@ -58,12 +59,52 @@ export class PersonController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
-    return this.personService.update(+id, updatePersonDto);
+  async update(  @Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto, @Res() res: Response) {
+    try {
+      const updatedPerson = await this.personService.update(+id, updatePersonDto);
+      return res.status(HttpStatus.OK).json({
+        message: 'Pessoa atualizada com sucesso',
+        data: updatedPerson,
+      });
+    } catch (error) {
+      console.error('Erro ao atualizar pessoa', error);
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'Erro ao atualizar pessoa',
+        data: error.message,
+      });
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.personService.remove(+id);
+  async remove(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const person = await this.personService.remove(+id)
+      return res.status(HttpStatus.OK).json({
+        data: person
+      })
+    } catch (error) {
+      console.error("Erro ao deletar pessoa ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao apagar pessoa",
+        data: error.message
+      })
+    }
+    
+  }
+
+  @Put(':id')
+  async active(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const person = await this.personService.active(+id)
+      return res.status(HttpStatus.OK).json({
+        data: person
+      })
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao apagar pessoa",
+        data: error.message
+      })
+    }
+    
   }
 }

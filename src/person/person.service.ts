@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Person } from './entities/person.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios, { Axios } from 'axios';
+import { error } from 'console';
 
 @Injectable()
 export class PersonService {
@@ -48,11 +49,53 @@ export class PersonService {
     return person
   }
 
-  update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
+  async update(id: number, updatePersonDto: UpdatePersonDto): Promise<Person> {
+    const person = await this.findOne(id);
+    if (!person) {
+      throw new Error('Pessoa não encontrada');
+    }
+  
+    const mergedPerson = this.personRepository.merge(person, updatePersonDto);
+  
+    if (updatePersonDto.zip_code) {
+      const address = await this.searchZipCode(updatePersonDto.zip_code);
+      if (address) {
+        mergedPerson.address = address.logradouro;
+        mergedPerson.district = address.bairro;
+        mergedPerson.city = address.localidade;
+        mergedPerson.state = address.estado;
+        mergedPerson.city_code = address.ibge;
+        mergedPerson.uf_state = address.uf;
+      }
+    }
+  
+    return await this.personRepository.save(mergedPerson);
+  }
+  
+
+  async remove(id: number) : Promise<Person> {
+    const person = await this.findOne(id)
+    if (!person) {
+      throw new Error("Person not exists!")
+    }
+    if (person.active) {
+      person.active = false
+      await this.personRepository.save(person)
+      return person
+    }
+    throw new Error("Person already false!")
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+
+  async active (id: number) : Promise<Person> {
+    const person = await this.findOne(id)
+    if (!person) {
+      throw new Error("Person not exists!")
+    }
+    if(!person.active) {
+      person.active = true
+      return await this.personRepository.save(person)
+    }
+    throw new Error("Person already false!")
   }
 }
