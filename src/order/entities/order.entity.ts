@@ -23,4 +23,16 @@ export class Order {
         default: OrderStatus.PENDENTE,
     })
     status: OrderStatus
+
+    @Column()
+    substotal: number
+
+    @Column()
+    total: number
+
+    @Column()
+    discount: number
+
+    @Column()
+    surcharge: number
 }
