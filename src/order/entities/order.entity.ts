@@ -15,7 +15,7 @@ export class Order {
 
     @ManyToOne(() => Person)
     @JoinColumn({ name: 'person_id' })
-    person_id: number
+    person: Person
 
     @Column({
         type: "enum",

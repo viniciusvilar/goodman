@@ -26,7 +26,7 @@ export class PersonService {
   async create(createPersonDto: CreatePersonDto) : Promise<Person> {
     let person = await this.personRepository.create(createPersonDto)
     const address = await this.searchZipCode(person.zip_code)
-    
+
     if (address) {
       person.address = address.logradouro;
       person.district = address.bairro;

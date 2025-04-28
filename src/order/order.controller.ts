@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -8,8 +9,20 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post("/create")
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
+  async create(@Body() createOrderDto: CreateOrderDto, @Res() res : Response) {
+    try {
+      const order = await this.orderService.create(createOrderDto)
+      return res.status(HttpStatus.CREATED).json({
+        message: "Pedido criado com sucesso",
+        data: order
+      })
+    } catch (error) {
+      console.error("Erro ao criar pedido ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao criar pedido",
+        data: error.message
+      })
+    }
   }
 
   @Get()
