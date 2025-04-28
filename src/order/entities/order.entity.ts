@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { OrderStatus } from "../enum/status-enum";
 import { Person } from "src/person/entities/person.entity";
+import { OrderIten } from "src/order-itens/entities/order-iten.entity";
 
 @Entity()
 export class Order {
@@ -35,4 +36,7 @@ export class Order {
 
     @Column()
     surcharge: number
+
+    @OneToMany(() => OrderIten, (orderItem) => orderItem.order)
+    items: OrderIten[];
 }

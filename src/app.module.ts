@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UnitModule } from './unit/unit.module';
 import { PersonModule } from './person/person.module';
 import { OrderModule } from './order/order.module';
+import { OrderItensModule } from './order-itens/order-itens.module';
 
 
 @Module({
@@ -24,7 +25,7 @@ import { OrderModule } from './order/order.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false,
     }), 
-    ProductsModule, UnitModule, PersonModule, OrderModule],
+    ProductsModule, UnitModule, PersonModule, OrderModule, OrderItensModule],
   controllers: [AppController],
   providers: [AppService],
 })

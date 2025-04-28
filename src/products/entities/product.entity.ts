@@ -1,5 +1,6 @@
+import { OrderIten } from "src/order-itens/entities/order-iten.entity";
 import { Unit } from "src/unit/entities/unit.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
 export class Product {
@@ -19,8 +20,11 @@ export class Product {
     unit: Unit
 
     @Column()
-    price: Number
+    price: number
 
     @Column({default: true})
     active: Boolean
+
+    @OneToMany(() => OrderIten, (orderItem) => orderItem.product)
+    orderItems: OrderIten[];
 }

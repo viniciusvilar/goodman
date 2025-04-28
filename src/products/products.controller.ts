@@ -17,10 +17,10 @@ export class ProductsController {
         data: product
       })
     } catch (error) {
-      console.error("Erro ao criar produto ", error)
+      console.error("Erro ao criar produto ", error.message)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Erro ao criar produto",
-        data: error.message
+        data: error.detail
       })
     }
   }
