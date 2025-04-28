@@ -26,13 +26,35 @@ export class OrderController {
   }
 
   @Get()
-  findAll() {
-    return this.orderService.findAll();
+  async findAll(@Res() res : Response) {
+    try {
+      const orders = await this.orderService.findAll()
+      return res.status(HttpStatus.OK).json({
+        data: orders
+      })
+    } catch (error) {
+      console.error("Erro ao listar pedidos ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao listar pedidos",
+        data: error.message
+      })
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const order = await this.orderService.findOne(+id)
+      return res.status(HttpStatus.OK).json({
+        data: order
+      })
+    } catch (error) {
+      console.error("Erro ao listar pedido ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao listar pedido",
+        data: error.message
+      })
+    }
   }
 
   @Patch(':id')

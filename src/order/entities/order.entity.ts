@@ -20,12 +20,12 @@ export class Order {
     @Column({
         type: "enum",
         enum: OrderStatus,
-        default: OrderStatus.PENDENTE,
+        default: OrderStatus.EM_ANDAMENTO,
     })
     status: OrderStatus
 
     @Column()
-    substotal: number
+    subtotal: number
 
     @Column()
     total: number

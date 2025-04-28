@@ -33,12 +33,14 @@ export class OrderService {
     return await this.orderRepository.save(order)
   }
 
-  findAll() {
-    return `This action returns all order`;
+  async findAll() : Promise<Order[]> {
+    return await this.orderRepository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: number) : Promise<Order | null> {
+    const order = await this.orderRepository.findOneBy({ id })
+
+    return order
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
