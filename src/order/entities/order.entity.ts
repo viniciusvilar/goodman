@@ -37,6 +37,6 @@ export class Order {
     @Column()
     surcharge: number
 
-    @OneToMany(() => OrderIten, (orderItem) => orderItem.order)
+    @OneToMany(() => OrderIten, item => item.order)
     items: OrderIten[];
 }

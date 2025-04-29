@@ -25,6 +25,6 @@ export class Product {
     @Column({default: true})
     active: Boolean
 
-    @OneToMany(() => OrderIten, (orderItem) => orderItem.product)
+    @OneToMany(() => OrderIten, item => item.product)
     orderItems: OrderIten[];
 }
