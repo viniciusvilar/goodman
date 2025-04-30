@@ -6,6 +6,7 @@ import { OrderIten } from './entities/order-iten.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductsService } from 'src/products/products.service';
 import { OrderService } from 'src/order/order.service';
+import { Order } from 'src/order/entities/order.entity';
 
 @Injectable()
 export class OrderItensService {
@@ -20,7 +21,7 @@ export class OrderItensService {
 
 
   async create(createOrderItenDto: CreateOrderItenDto) {
-    const order = await this.orderService.findOne(createOrderItenDto.order_id)
+    let order = await this.orderService.findOne(createOrderItenDto.order_id)
     const product = await this.productService.findOne(createOrderItenDto.product_id)
 
     if (!order) {
@@ -41,13 +42,22 @@ export class OrderItensService {
       total: (product.price * createOrderItenDto.quantity) - createOrderItenDto.discount + createOrderItenDto.surcharge
     })
 
+    order.subtotal += orderItens.subtotal
+    order.discount += orderItens.discount
+    order.surcharge += orderItens.surcharge
+    order.total += orderItens.total
+
+    await this.orderService.attPrice(order);
+
+
     return await this.orderItensRepository.save(orderItens)
   }
 
   async findAll() {
-    return await this.orderItensRepository.find({
+    return await this.orderItensRepository.find()
+    /*return await this.orderItensRepository.find({
       relations: ['order', 'product']
-    })
+    })*/
   }
 
   findOne(id: number) {
@@ -58,7 +68,17 @@ export class OrderItensService {
     return `This action updates a #${id} orderIten`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} orderIten`;
+  async remove(id: number) {
+    const orderItem = await this.orderItensRepository.findOneBy({ id })
+    if (!orderItem) {
+      throw new Error("Item não encontrado")
+    }
+    console.log("Antes do Throw")
+
+    try {
+      return await this.orderItensRepository.remove(orderItem);
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }

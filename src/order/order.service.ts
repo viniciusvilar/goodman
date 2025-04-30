@@ -14,6 +14,11 @@ export class OrderService {
 
   constructor(private readonly personService : PersonService) {}
 
+  async attPrice(order: Order) : Promise<Order> {
+    const orderAtt = await this.orderRepository.save(order)
+
+    return orderAtt
+  }
 
   async create(createOrderDto: CreateOrderDto) : Promise<Order> {
     const person = await this.personService.findOne(+createOrderDto.person_id)
