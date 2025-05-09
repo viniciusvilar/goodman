@@ -55,9 +55,6 @@ export class OrderItensService {
 
   async findAll() {
     return await this.orderItensRepository.find()
-    /*return await this.orderItensRepository.find({
-      relations: ['order', 'product']
-    })*/
   }
 
   findOne(id: number) {
@@ -66,19 +63,5 @@ export class OrderItensService {
 
   update(id: number, updateOrderItenDto: UpdateOrderItenDto) {
     return `This action updates a #${id} orderIten`;
-  }
-
-  async remove(id: number) {
-    const orderItem = await this.orderItensRepository.findOneBy({ id })
-    if (!orderItem) {
-      throw new Error("Item não encontrado")
-    }
-    console.log("Antes do Throw")
-
-    try {
-      return await this.orderItensRepository.remove(orderItem);
-    } catch (error) {
-      throw new Error(error)
-    }
   }
 }
