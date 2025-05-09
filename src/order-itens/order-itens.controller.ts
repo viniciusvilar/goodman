@@ -39,17 +39,4 @@ export class OrderItensController {
   update(@Param('id') id: string, @Body() updateOrderItenDto: UpdateOrderItenDto) {
     return this.orderItensService.update(+id, updateOrderItenDto);
   }
-
-  @Delete(':id')
-  async remove(@Param('id') id: string, @Res() res : Response) {
-    try {
-      const orderItem = await this.orderItensService.remove(+id)
-      return res.status(HttpStatus.NO_CONTENT)
-    } catch (error) {
-      console.log("Erro ao exluir produto ", error)
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        message: error.message,
-      })
-    }
-  }
 }
