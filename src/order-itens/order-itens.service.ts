@@ -28,6 +28,10 @@ export class OrderItensService {
       throw new Error("Pedido não existe!")
     }
 
+    if (order.status != "ANDAMENTO") {
+      throw new Error ("O pedido não está em ANDAMENTO")
+    }
+
     if (!product) {
       throw new Error("Produto não existe!")
     }
