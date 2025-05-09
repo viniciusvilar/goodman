@@ -3,6 +3,8 @@ import { Response } from 'express';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { OrderStatus } from './enum/status-enum';
+import { UpdateOrderStatusDto } from './dto/update-status-order.dto';
 
 @Controller('v1/order')
 export class OrderController {
@@ -58,8 +60,19 @@ export class OrderController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
+  async update(@Param('id') id: string, @Body() updateOrderStatusDto: UpdateOrderStatusDto, @Res() res : Response) {
+    try {
+      const order = await this.orderService.updateStatus(+id, updateOrderStatusDto)
+      return res.status(HttpStatus.OK).json({
+        data: order
+      })
+    } catch (error) {
+      console.error("Erro ao alterar status do pedido ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao alterar status do pedido",
+        data: error.message
+      })
+    }
   }
 
   @Delete(':id')

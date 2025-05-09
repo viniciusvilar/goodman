@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PersonService } from 'src/person/person.service';
+import { OrderStatus } from './enum/status-enum';
+import { UpdateOrderStatusDto } from './dto/update-status-order.dto';
 
 @Injectable()
 export class OrderService {
@@ -48,8 +50,17 @@ export class OrderService {
     return order
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async updateStatus(id: number, updateOrderStatusDto : UpdateOrderStatusDto) {
+    const order = await this.findOne(id)
+
+    if (!order) {
+      throw new Error("Order not found!")
+    }
+
+    order.status = updateOrderStatusDto.status
+
+    return await this.orderRepository.save(order)
+
   }
 
   remove(id: number) {
