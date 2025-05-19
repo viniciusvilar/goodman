@@ -6,7 +6,6 @@ import { OrderIten } from './entities/order-iten.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductsService } from 'src/products/products.service';
 import { OrderService } from 'src/order/order.service';
-import { Order } from 'src/order/entities/order.entity';
 
 @Injectable()
 export class OrderItensService {
