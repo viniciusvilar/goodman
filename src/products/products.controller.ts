@@ -3,6 +3,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Response } from 'express';
+import { NcmProduct } from './dto/ncm-product.dto';
 
 @Controller('v1/products')
 export class ProductsController {
@@ -98,4 +99,19 @@ export class ProductsController {
       })
     }
   }
+
+  @Post('setncm/:id')
+  async setNcm(@Param('id') id: string, @Body() ncm : NcmProduct, @Res() res : Response) {
+    try {
+      const product = await this.productsService.setNCM(+id, ncm)
+      return res.status(HttpStatus.OK).json({
+        data: product
+      })
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        data: error.message
+      })
+    }
+  }
+
 }

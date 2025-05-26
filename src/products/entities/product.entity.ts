@@ -27,4 +27,7 @@ export class Product {
 
     @OneToMany(() => OrderIten, item => item.product)
     orderItems: OrderIten[];
+
+    @Column({ type: "varchar", length: 8, nullable: true })
+    ncm: string;
 }

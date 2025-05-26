@@ -6,6 +6,8 @@ import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { error } from 'console';
 import { UnitService } from 'src/unit/unit.service';
+import { consultarNCM } from './functions/consulta-ncm';
+import { NcmProduct } from './dto/ncm-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -100,5 +102,24 @@ export class ProductsService {
     }
     
     throw new Error("Product alreadys true!")
+  }
+
+  async setNCM(id: number, ncm : NcmProduct) {
+    const product = await this.findOne(id)
+
+    if (!product) {
+      throw new Error("Product not found!")
+    }
+    const ncmList = await consultarNCM();
+
+    const ncmExists = ncmList.find(item => item.codigo === ncm.ncm)
+
+    if (!ncmExists) {
+      throw new Error("NCM not found!")
+    }
+
+    product.ncm = ncm.ncm
+
+    return this.productRepository.save(product)
   }
 }
