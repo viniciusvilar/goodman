@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PersonService } from 'src/person/person.service';
-import { OrderStatus } from './enum/status-enum';
 import { UpdateOrderStatusDto } from './dto/update-status-order.dto';
+import { OrderStatus } from './enum/status-enum';
+import { PaymentDto } from './dto/payment.dto';
+import { PaymentService } from 'src/payment/payment.service';
 
 @Injectable()
 export class OrderService {
@@ -14,7 +15,10 @@ export class OrderService {
   @InjectRepository(Order)
   private readonly orderRepository : Repository<Order>
 
-  constructor(private readonly personService : PersonService) {}
+  constructor(
+    private readonly personService : PersonService,
+    private readonly paymentService : PaymentService
+  ) {}
 
   async attPrice(order: Order) : Promise<Order> {
     const orderAtt = await this.orderRepository.save(order)
@@ -65,5 +69,28 @@ export class OrderService {
 
   remove(id: number) {
     return `This action removes a #${id} order`;
+  }
+
+  async finalize(id: number, paymentDto: PaymentDto) : Promise<Order> {
+    const order = await this.findOne(id)
+    const payment = await this.paymentService.findOne(paymentDto.id)
+    console.log(payment)
+
+    if (!order) {
+      throw new Error("Pedido não existe!")
+    }
+
+    if (!payment) {
+      throw new Error("Finalizadora não existe!")
+    }
+
+    if(order.status != OrderStatus.EM_ANDAMENTO) {
+      throw new Error("Pedido precisa está com o status de ANDAMENTO")
+    }
+
+    order.payment = payment
+    order.status = OrderStatus.FINALIZADO
+
+    return await this.orderRepository.save(order)
   }
 }

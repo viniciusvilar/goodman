@@ -5,6 +5,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderStatus } from './enum/status-enum';
 import { UpdateOrderStatusDto } from './dto/update-status-order.dto';
+import { PaymentDto } from './dto/payment.dto';
 
 @Controller('v1/order')
 export class OrderController {
@@ -78,5 +79,21 @@ export class OrderController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.orderService.remove(+id);
+  }
+
+  @Patch('finalize/:id')
+  async finalize(@Param("id") id: string, @Body() paymentDto : PaymentDto, @Res() res : Response) {
+    try {
+      const order = await this.orderService.finalize(+id, paymentDto)
+      return res.status(HttpStatus.OK).json({
+        data: order
+      })
+    } catch (error) {
+      console.error("Erro ao finalizar pedido ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Eoo ao finalizar pedido",
+        data: error.message
+      })
+    }
   }
 }

@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { OrderStatus } from "../enum/status-enum";
 import { Person } from "src/person/entities/person.entity";
 import { OrderIten } from "src/order-itens/entities/order-iten.entity";
+import { Payment } from "src/payment/entities/payment.entity";
 
 @Entity()
 export class Order {
@@ -39,4 +40,8 @@ export class Order {
 
     @OneToMany(() => OrderIten, item => item.order)
     items: OrderIten[];
+
+    @ManyToOne(() => Payment)
+    @JoinColumn({ name: 'payment_id' })
+    payment: Payment;
 }
