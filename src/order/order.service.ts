@@ -74,7 +74,6 @@ export class OrderService {
   async finalize(id: number, paymentDto: PaymentDto) : Promise<Order> {
     const order = await this.findOne(id)
     const payment = await this.paymentService.findOne(paymentDto.id)
-    console.log(payment)
 
     if (!order) {
       throw new Error("Pedido não existe!")
@@ -90,6 +89,8 @@ export class OrderService {
 
     order.payment = payment
     order.status = OrderStatus.FINALIZADO
+    const now = new Date()
+    order.begin_finish = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
 
     return await this.orderRepository.save(order)
   }
