@@ -57,7 +57,9 @@ export class OrderItensService {
   }
 
   async findAll() {
-    return await this.orderItensRepository.find()
+    return await this.orderItensRepository.find({
+      relations: ["order", "product"]
+    })
   }
 
   findOne(id: number) {
