@@ -96,4 +96,20 @@ export class OrderController {
       })
     }
   }
+
+  @Patch('refund/:id')
+  async refund(@Param("id") id: string, @Res() res : Response) {
+    try {
+      const order = await this.orderService.refund(+id)
+      return res.status(HttpStatus.OK).json({
+        data: order
+      })
+    } catch (error) {
+      console.error("Erro ao estornar pedido ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Eoo ao estornar pedido",
+        data: error.message
+      })
+    }
+  }
 }

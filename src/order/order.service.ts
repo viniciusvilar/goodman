@@ -93,4 +93,20 @@ export class OrderService {
 
     return await this.orderRepository.save(order)
   }
+
+  async refund (id: number) : Promise<Order> {
+    const order = await this.findOne(id)
+
+    if (!order) {
+      throw new Error("Pedido não existe!")
+    }
+
+    if (order.status != OrderStatus.FINALIZADO) {
+      throw new Error("Só é possível estornar pedidos finalizados")
+    }
+
+    order.status = OrderStatus.CANCELADO
+
+    return await this.orderRepository.save(order)
+  }
 }
