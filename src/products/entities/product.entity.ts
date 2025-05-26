@@ -30,4 +30,7 @@ export class Product {
 
     @Column({ type: "varchar", length: 8, nullable: true })
     ncm: string;
+
+    @Column({ type: "float", default: 0 })
+    stock: number;
 }
