@@ -76,15 +76,15 @@ export class OrderService {
     const payment = await this.paymentService.findOne(paymentDto.id)
 
     if (!order) {
-      throw new Error("Pedido não existe!")
+      throw new Error("Order not found!")
     }
 
     if (!payment) {
-      throw new Error("Finalizadora não existe!")
+      throw new Error("Payment not found!")
     }
 
     if(order.status != OrderStatus.EM_ANDAMENTO) {
-      throw new Error("Pedido precisa está com o status de ANDAMENTO")
+      throw new Error("Order must be in ANDAMENTO status")
     }
 
     order.payment = payment
@@ -99,11 +99,11 @@ export class OrderService {
     const order = await this.findOne(id)
 
     if (!order) {
-      throw new Error("Pedido não existe!")
+      throw new Error("Order not found!")
     }
 
     if (order.status != OrderStatus.FINALIZADO) {
-      throw new Error("Só é possível estornar pedidos finalizados")
+      throw new Error("It is only possible to cancel completed orders.")
     }
 
     order.status = OrderStatus.CANCELADO

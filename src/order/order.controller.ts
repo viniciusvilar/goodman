@@ -16,13 +16,13 @@ export class OrderController {
     try {
       const order = await this.orderService.create(createOrderDto)
       return res.status(HttpStatus.CREATED).json({
-        message: "Pedido criado com sucesso",
+        message: "Order created successfully",
         data: order
       })
     } catch (error) {
-      console.error("Erro ao criar pedido ", error)
+      console.error("Error creating order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao criar pedido",
+        message: "Error creating order",
         data: error.message
       })
     }
@@ -36,9 +36,9 @@ export class OrderController {
         data: orders
       })
     } catch (error) {
-      console.error("Erro ao listar pedidos ", error)
+      console.error("Error listing orders ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar pedidos",
+        message: "Error listing orders",
         data: error.message
       })
     }
@@ -52,9 +52,9 @@ export class OrderController {
         data: order
       })
     } catch (error) {
-      console.error("Erro ao listar pedido ", error)
+      console.error("Error listing order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar pedido",
+        message: "Error listing order",
         data: error.message
       })
     }
@@ -68,9 +68,9 @@ export class OrderController {
         data: order
       })
     } catch (error) {
-      console.error("Erro ao alterar status do pedido ", error)
+      console.error("Error changing order status ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao alterar status do pedido",
+        message: "Error changing order status",
         data: error.message
       })
     }
@@ -89,9 +89,9 @@ export class OrderController {
         data: order
       })
     } catch (error) {
-      console.error("Erro ao finalizar pedido ", error)
+      console.error("Error completing order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Eoo ao finalizar pedido",
+        message: "Error completing order",
         data: error.message
       })
     }
@@ -105,9 +105,9 @@ export class OrderController {
         data: order
       })
     } catch (error) {
-      console.error("Erro ao estornar pedido ", error)
+      console.error("Error canceling order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Eoo ao estornar pedido",
+        message: "Error canceling order",
         data: error.message
       })
     }

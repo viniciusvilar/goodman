@@ -13,13 +13,13 @@ export class UnitController {
     try {
       const unit = await this.unitService.create(createUnitDto);
       return res.status(HttpStatus.CREATED).json({
-        message: "Unidade criada com sucesso",
+        message: "Unit created successfully",
         data: unit
       })
     } catch (error) {
-      console.error("Erro ao criar unidade ", error)
+      console.error("Error to create unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao criar unidade",
+        message: "Error to create unit",
         data: error.message
       })
     }
@@ -34,9 +34,9 @@ export class UnitController {
         data: unit
       })
     } catch (error) {
-      console.log("Erro ao listar unidades ", error)
+      console.log("Error to list unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar unidades",
+        message: "Error to list unit",
         data: error.message
       })
     }
@@ -50,9 +50,9 @@ export class UnitController {
         data: unit
       })
     } catch (error) {
-      console.log("Erro ao listar unidade ", error)
+      console.log("Error to list unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar unidade",
+        message: "Error to list unit",
         data: error.message
       })
     }
@@ -66,9 +66,9 @@ export class UnitController {
         data: unit
       })
     } catch (error) {
-      console.log("Erro ao atualizar unidade ", error)
+      console.log("Error to update unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar unidade",
+        message: "Error to update unit",
         data: error.message
       })
     }
@@ -83,9 +83,9 @@ export class UnitController {
         data: unit
       })
     } catch (error) {
-      console.log("Erro ao apagar unidade ", error)
+      console.log("Error to delete unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao apagar unidade",
+        message: "Error to delete unit",
         data: error.message
       })
     }
@@ -99,9 +99,9 @@ export class UnitController {
         data: unit
       })
     } catch (error) {
-      console.log("Erro ao ativar unidade ", error)
+      console.log("Error to active unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao ativar unidade",
+        message: "Error to active unit",
         data: error.message
       })
     }

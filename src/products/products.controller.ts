@@ -14,13 +14,13 @@ export class ProductsController {
     try {
       const product = await this.productsService.create(createProductDto)
       return res.status(HttpStatus.CREATED).json({
-        message: "Produto criado com sucesso",
+        message: "Product created successfully",
         data: product
       })
     } catch (error) {
-      console.error("Erro ao criar produto ", error.message)
+      console.error("Error to create product ", error.message)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao criar produto",
+        message: "Error to create product",
         data: error.detail
       })
     }
@@ -60,12 +60,12 @@ export class ProductsController {
     try {
       const updatedProduct = await this.productsService.update(+id, updateProductDto);
       return res.status(HttpStatus.OK).json({
-        message: 'Produto atualizado com sucesso',
+        message: 'Product updated successfully',
         data: updatedProduct,
       });
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'Erro ao atualizar produto',
+        message: 'Error to updated product',
         error: error.message,
       });
     }

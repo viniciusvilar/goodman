@@ -24,15 +24,15 @@ export class OrderItensService {
     const product = await this.productService.findOne(createOrderItenDto.product_id)
 
     if (!order) {
-      throw new Error("Pedido não existe!")
+      throw new Error("Order not found!")
     }
 
     if (order.status != "ANDAMENTO") {
-      throw new Error ("O pedido não está em ANDAMENTO")
+      throw new Error ("The request is NOT IN ANDAMENTO")
     }
 
     if (!product) {
-      throw new Error("Produto não existe!")
+      throw new Error("Product not found!")
     }
 
     const orderItens = await this.orderItensRepository.create({

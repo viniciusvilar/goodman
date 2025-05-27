@@ -13,13 +13,13 @@ export class OrderItensController {
     try {
       const orderIten = await this.orderItensService.create(createOrderItenDto)
       return res.status(HttpStatus.CREATED).json({
-        message: "Produto adicionado com sucesso",
+        message: "Product added successfully",
         data: orderIten
       })
     } catch (error) {
-      console.log("Erro ao adicionar produto ", error)
+      console.log("Error adding product ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao adicionar produto",
+        message: "Error adding product",
         data: error.message
       })
     }
@@ -48,9 +48,9 @@ export class OrderItensController {
         data: orderItens
       })
     } catch (error) {
-      console.log("Erro ao listar ", error)
+      console.log("Error when listing ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar",
+        message: "Error when listing",
         data: error.message
       })
     }

@@ -14,13 +14,13 @@ export class PersonController {
     try {
       const person = await this.personService.create(createPersonDto)
       return res.status(HttpStatus.CREATED).json({
-        message: "Pessoa criada com sucesso",
+        message: "Successfully created person",
         data: person
       })
     } catch (error) {
-      console.error("Erro ao criar pessoa ", error)
+      console.error("Error creating person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao criar pessoa",
+        message: "Error creating person",
         data: error.message
       })
     }
@@ -34,9 +34,9 @@ export class PersonController {
         data: persons
       })
     } catch (error) {
-      console.error("Erro ao listar pessoas ", error)
+      console.error("Error listing person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar pessoas",
+        message: "Error listing person",
         data: error.message
       })
     }
@@ -50,9 +50,9 @@ export class PersonController {
         data: person
       })
     } catch (error) {
-      console.error("Erro ao listar pessoa ", error)
+      console.error("Error listing person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao listar pessoa",
+        message: "Error listing person",
         data: error.message
       })
     }
@@ -63,13 +63,13 @@ export class PersonController {
     try {
       const updatedPerson = await this.personService.update(+id, updatePersonDto);
       return res.status(HttpStatus.OK).json({
-        message: 'Pessoa atualizada com sucesso',
+        message: 'Person updated successfully',
         data: updatedPerson,
       });
     } catch (error) {
-      console.error('Erro ao atualizar pessoa', error);
+      console.error('Error updating person', error);
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'Erro ao atualizar pessoa',
+        message: 'Error updating person',
         data: error.message,
       });
     }
@@ -83,9 +83,9 @@ export class PersonController {
         data: person
       })
     } catch (error) {
-      console.error("Erro ao deletar pessoa ", error)
+      console.error("Error deleting person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao apagar pessoa",
+        message: "Error deleting person",
         data: error.message
       })
     }
@@ -101,7 +101,7 @@ export class PersonController {
       })
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
-        message: "Erro ao apagar pessoa",
+        message: "Error activing person",
         data: error.message
       })
     }

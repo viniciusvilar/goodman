@@ -13,13 +13,13 @@ export class PaymentController {
     try {
       const payment = await this.paymentService.create(createPaymentDto)
       return res.status(HttpStatus.CREATED).json({
-        message: "Finalizadora criada com sucesso",
+        message: "Payment created successfully",
         data: payment
       })
     } catch (error) {
-      console.error("Erro ao criar finalizadora ", error.message)
+      console.error("Error creating payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
-        message: "Erro ao criar finalizadora",
+        message: "Error creating payment",
         data: error
       })
     }
@@ -33,9 +33,9 @@ export class PaymentController {
         data: payment
       })
     } catch (error) {
-      console.error("Erro ao listar finalizadora ", error.message)
+      console.error("Error listing payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
-        message: "Erro ao listar finalizadora",
+        message: "Error listing payment",
         data: error
       })
     }
@@ -49,9 +49,9 @@ export class PaymentController {
         data: payment
       })
     } catch (error) {
-      console.error("Erro ao encontrar finalizadora ", error.message)
+      console.error("Error finding payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
-        message: "Erro ao listar finalziadora",
+        message: "Error finding payment",
         data: error
       })
     }
@@ -65,9 +65,9 @@ export class PaymentController {
         data: payment
       })
     } catch (error) {
-      console.error("Erro ao atualizar finalizadora ", error.message)
+      console.error("Error updating payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
-        message: "Erro ao atualizar finalziadora",
+        message: "Error updating payment",
         data: error
       })
     }
@@ -78,13 +78,13 @@ export class PaymentController {
     try {
       const payment = await this.paymentService.inactive(+id)
       return res.status(HttpStatus.OK).json({
-        message: "Finalizadora inativado com sucesso",
+        message: "Payment successfully deactivated",
         data: payment
       })
     } catch (error) {
-      console.error("Erro ao inativar finalizadora ", error.message)
+      console.error("Error disabling payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
-        message: "Erro ao inativar finalziadora",
+        message: "Error disabling payment",
         data: error.message
       })
     }
@@ -95,13 +95,13 @@ export class PaymentController {
     try {
       const payment = await this.paymentService.active(+id)
       return res.status(HttpStatus.OK).json({
-        message: "Finalizadora ativada com sucesso",
+        message: "Payment activated successfully",
         data: payment
       })
     } catch (error) {
-      console.error("Erro ao ativar finalizadora ", error.message)
+      console.error("Error activating payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
-        message: "Erro ao ativar finalziadora",
+        message: "Error activating payment",
         data: error.message
       })
     }

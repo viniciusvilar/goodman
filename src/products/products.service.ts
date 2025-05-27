@@ -23,7 +23,7 @@ export class ProductsService {
     const unit = await this.unitService.findByCode(unitCode)
 
     if (!unit) {
-      throw new Error("Unidade não encontrada")
+      throw new Error("Unit not found")
     }
 
     const product = this.productRepository.create({
@@ -55,21 +55,19 @@ export class ProductsService {
     });
   
     if (!product) {
-      throw new Error('Produto não encontrado');
+      throw new Error('Product not found');
     }
   
-    // Se o DTO tiver a unidade, atualiza também
     if (unitCode) {
       const unit = await this.unitService.findByCode(unitCode);
   
       if (!unit) {
-        throw new Error('Unidade não encontrada');
+        throw new Error('Unit not found');
       }
   
       product.unit = unit;
     }
   
-    // Atualiza os demais campos
     Object.assign(product, rest);
   
     return await this.productRepository.save(product);
@@ -79,7 +77,7 @@ export class ProductsService {
   async remove(id: number) {
     const product = await this.findOne(id)
     if (!product) {
-      throw new Error("Product not exists!")
+      throw new Error("Product not found!")
     }
     if (product.active) {
       product.active = false
@@ -93,7 +91,7 @@ export class ProductsService {
   async active(id: number) {
     const product = await this.findOne(id)
     if (!product) {
-      throw new Error("Product not exists!")
+      throw new Error("Product not found!")
     }
     if (!product.active) {
       product.active = true

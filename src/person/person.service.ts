@@ -18,7 +18,7 @@ export class PersonService {
       const address = await axios.get(`https://viacep.com.br/ws/${zipCode}/json/`)
       return address.data
     } catch (error) {
-      console.error("Erro ao buscar CEP:", error.message);
+      console.error("Error to finding CEP:", error.message);
     }
     
   }
@@ -52,7 +52,7 @@ export class PersonService {
   async update(id: number, updatePersonDto: UpdatePersonDto): Promise<Person> {
     const person = await this.findOne(id);
     if (!person) {
-      throw new Error('Pessoa não encontrada');
+      throw new Error('Person not found');
     }
   
     const mergedPerson = this.personRepository.merge(person, updatePersonDto);

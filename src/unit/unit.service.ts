@@ -39,7 +39,7 @@ export class UnitService {
     const unit = await this.findOne(+id)
 
     if (!unit) {
-      throw new Error("Unit not exist!")
+      throw new Error("Unit not found!")
     }
 
     const updatedUnit = this.unitRepository.merge(unit, updateUnitDto)
@@ -49,7 +49,7 @@ export class UnitService {
   async remove(id: number) {
     const unit = await this.findOne(id)
     if (!unit) {
-      throw new Error("Unit not exist!")
+      throw new Error("Unit not found!")
     }
     if (unit.active) {
       unit.active = false
@@ -63,7 +63,7 @@ export class UnitService {
   async active(id: number) {
     const unit = await this.findOne(id)
     if (!unit) {
-      throw new Error("Unit not exist!")
+      throw new Error("Unit not found!")
     }
     if (!unit.active) {
       unit.active = true
