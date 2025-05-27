@@ -35,7 +35,7 @@ export class ProductsController {
       })
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
-        data: error.message
+        data: error.detail
       })
     }
     
@@ -50,7 +50,7 @@ export class ProductsController {
       })
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -66,7 +66,7 @@ export class ProductsController {
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: 'Error to updated product',
-        error: error.message,
+        error: error.detail
       });
     }
   }
@@ -81,7 +81,7 @@ export class ProductsController {
       })
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -95,7 +95,7 @@ export class ProductsController {
       })
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -109,7 +109,7 @@ export class ProductsController {
       })
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
-        data: error.message
+        data: error.detail
       })
     }
   }

@@ -23,7 +23,7 @@ export class OrderController {
       console.error("Error creating order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error creating order",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -39,7 +39,7 @@ export class OrderController {
       console.error("Error listing orders ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error listing orders",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -55,7 +55,7 @@ export class OrderController {
       console.error("Error listing order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error listing order",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -71,7 +71,7 @@ export class OrderController {
       console.error("Error changing order status ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error changing order status",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -92,7 +92,7 @@ export class OrderController {
       console.error("Error completing order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error completing order",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -108,7 +108,7 @@ export class OrderController {
       console.error("Error canceling order ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error canceling order",
-        data: error.message
+        data: error.detail
       })
     }
   }

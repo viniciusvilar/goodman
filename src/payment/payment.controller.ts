@@ -20,7 +20,7 @@ export class PaymentController {
       console.error("Error creating payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
         message: "Error creating payment",
-        data: error
+        data: error.detail
       })
     }
   }
@@ -36,7 +36,7 @@ export class PaymentController {
       console.error("Error listing payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
         message: "Error listing payment",
-        data: error
+        data: error.detail
       })
     }
   }
@@ -52,7 +52,7 @@ export class PaymentController {
       console.error("Error finding payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
         message: "Error finding payment",
-        data: error
+        data: error.detail
       })
     }
   }
@@ -68,7 +68,7 @@ export class PaymentController {
       console.error("Error updating payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
         message: "Error updating payment",
-        data: error
+        data: error.detail
       })
     }
   }
@@ -85,7 +85,7 @@ export class PaymentController {
       console.error("Error disabling payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
         message: "Error disabling payment",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -102,7 +102,7 @@ export class PaymentController {
       console.error("Error activating payment ", error.message)
       return res.status(HttpStatus.BAD_GATEWAY).json({
         message: "Error activating payment",
-        data: error.message
+        data: error.detail
       })
     }
   }

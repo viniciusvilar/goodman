@@ -20,7 +20,7 @@ export class OrderItensController {
       console.log("Error adding product ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error adding product",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -51,7 +51,7 @@ export class OrderItensController {
       console.log("Error when listing ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error when listing",
-        data: error.message
+        data: error.detail
       })
     }
   }

@@ -20,7 +20,7 @@ export class UnitController {
       console.error("Error to create unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error to create unit",
-        data: error.message
+        data: error.detail
       })
     }
     
@@ -37,7 +37,7 @@ export class UnitController {
       console.log("Error to list unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error to list unit",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -53,7 +53,7 @@ export class UnitController {
       console.log("Error to list unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error to list unit",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -69,7 +69,7 @@ export class UnitController {
       console.log("Error to update unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error to update unit",
-        data: error.message
+        data: error.detail
       })
     }
     
@@ -86,7 +86,7 @@ export class UnitController {
       console.log("Error to delete unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error to delete unit",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -102,7 +102,7 @@ export class UnitController {
       console.log("Error to active unit ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error to active unit",
-        data: error.message
+        data: error.detail
       })
     }
   }

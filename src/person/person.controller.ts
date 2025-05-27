@@ -21,7 +21,7 @@ export class PersonController {
       console.error("Error creating person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error creating person",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -37,7 +37,7 @@ export class PersonController {
       console.error("Error listing person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error listing person",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -53,7 +53,7 @@ export class PersonController {
       console.error("Error listing person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error listing person",
-        data: error.message
+        data: error.detail
       })
     }
   }
@@ -70,7 +70,7 @@ export class PersonController {
       console.error('Error updating person', error);
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: 'Error updating person',
-        data: error.message,
+        data: error.detail,
       });
     }
   }
@@ -86,7 +86,7 @@ export class PersonController {
       console.error("Error deleting person ", error)
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error deleting person",
-        data: error.message
+        data: error.detail
       })
     }
     
@@ -102,7 +102,7 @@ export class PersonController {
     } catch (error) {
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: "Error activing person",
-        data: error.message
+        data: error.detail
       })
     }
     
