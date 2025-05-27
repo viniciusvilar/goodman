@@ -15,7 +15,7 @@ export class OrderItensService {
 
   constructor(
     private readonly productService : ProductsService, 
-    private readonly orderService : OrderService
+    private readonly orderService : OrderService,
   ) {}
 
 

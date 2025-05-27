@@ -8,6 +8,8 @@ import { UpdateOrderStatusDto } from './dto/update-status-order.dto';
 import { OrderStatus } from './enum/status-enum';
 import { PaymentDto } from './dto/payment.dto';
 import { PaymentService } from 'src/payment/payment.service';
+import { OrderIten } from 'src/order-itens/entities/order-iten.entity';
+import { Product } from 'src/products/entities/product.entity';
 
 @Injectable()
 export class OrderService {
@@ -15,9 +17,15 @@ export class OrderService {
   @InjectRepository(Order)
   private readonly orderRepository : Repository<Order>
 
+  @InjectRepository(OrderIten)
+  private readonly orderItenRepository : Repository<OrderIten>
+
+  @InjectRepository(Product)
+  private readonly productRepository : Repository<Product>
+
   constructor(
     private readonly personService : PersonService,
-    private readonly paymentService : PaymentService
+    private readonly paymentService : PaymentService,
   ) {}
 
   async attPrice(order: Order) : Promise<Order> {
@@ -89,6 +97,26 @@ export class OrderService {
 
     order.payment = payment
     order.status = OrderStatus.FINALIZADO
+
+    // Baixando produtos do estoque
+    const itens = await this.orderItenRepository.find({
+      where: {
+        order: {
+          id: id 
+        }
+      },
+      relations: ['order', 'product'] 
+    });
+
+    for (const item of itens) {
+      const produto = item.product;
+
+      produto.stock -= item.quantity
+
+      await this.productRepository.save(produto)
+    } 
+    // Fim da baixa do estoque
+
     const now = new Date()
     order.begin_finish = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
 
@@ -107,6 +135,25 @@ export class OrderService {
     }
 
     order.status = OrderStatus.CANCELADO
+
+    // Voltando produtos do estoque
+    const itens = await this.orderItenRepository.find({
+      where: {
+        order: {
+          id: id 
+        }
+      },
+      relations: ['order', 'product'] 
+    });
+
+    for (const item of itens) {
+      const produto = item.product;
+
+      produto.stock += item.quantity
+
+      await this.productRepository.save(produto)
+    } 
+    // Fim da volta ao estoque
 
     return await this.orderRepository.save(order)
   }
