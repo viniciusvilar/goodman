@@ -8,6 +8,7 @@ import { error } from 'console';
 import { UnitService } from 'src/unit/unit.service';
 import { consultarNCM } from './functions/consulta-ncm';
 import { NcmProduct } from './dto/ncm-product.dto';
+import { TaxService } from 'src/tax/tax.service';
 
 @Injectable()
 export class ProductsService {
@@ -15,19 +16,28 @@ export class ProductsService {
   @InjectRepository(Product)
   private readonly productRepository : Repository<Product>
 
-  constructor(private readonly unitService: UnitService) {}
+  constructor(
+    private readonly unitService: UnitService,
+    private readonly taxService: TaxService
+  ) {}
   
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const { unit: unitCode, ...rest} = createProductDto
+    const { unit: unitCode, tax: taxCode, ...rest} = createProductDto
 
     const unit = await this.unitService.findByCode(unitCode)
+    const tax = await this.taxService.findOne(taxCode)
 
     if (!unit) {
       throw new Error("Unit not found")
     }
 
+    if (!tax) {
+      throw new Error("Tax not found")
+    }
+
     const product = this.productRepository.create({
       ...rest,
+      tax,
       unit
     })
     

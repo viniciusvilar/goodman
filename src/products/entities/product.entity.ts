@@ -1,4 +1,5 @@
 import { OrderIten } from "src/order-itens/entities/order-iten.entity";
+import { Tax } from "src/tax/entities/tax.entity";
 import { Unit } from "src/unit/entities/unit.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
@@ -33,4 +34,7 @@ export class Product {
 
     @Column({ type: "float", default: 0 })
     stock: number;
+
+    @ManyToOne(() => Tax, { nullable: true, eager: true })
+    tax: Tax;
 }

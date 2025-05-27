@@ -12,11 +12,13 @@ import { ProductsService } from 'src/products/products.service';
 import { Unit } from 'src/unit/entities/unit.entity';
 import { UnitService } from 'src/unit/unit.service';
 import { OrderIten } from 'src/order-itens/entities/order-iten.entity';
+import { Tax } from 'src/tax/entities/tax.entity';
+import { TaxService } from 'src/tax/tax.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, Person, Payment, Product, Unit, OrderIten, Product])],
+  imports: [TypeOrmModule.forFeature([Order, Person, Payment, Product, Unit, OrderIten, Product, Tax])],
   controllers: [OrderController],
-  providers: [OrderService, PersonService, PaymentService, ProductsService, UnitService],
+  providers: [OrderService, PersonService, PaymentService, ProductsService, UnitService, TaxService],
   exports: [OrderService]
 })
 export class OrderModule {}

@@ -12,4 +12,6 @@ export class CreateProductDto {
     unit: string
     @IsNumber()
     price: number
+    @IsNumber()
+    tax: number
 }
