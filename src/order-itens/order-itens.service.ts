@@ -69,4 +69,12 @@ export class OrderItensService {
   update(id: number, updateOrderItenDto: UpdateOrderItenDto) {
     return `This action updates a #${id} orderIten`;
   }
+
+  async findByIdOrder(id: number) {
+    const orderItens = await this.findAll()
+
+    const orderItensSpecify = orderItens.filter(item => item.order.id === id);
+
+    return orderItensSpecify
+  }
 }

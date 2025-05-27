@@ -39,4 +39,20 @@ export class OrderItensController {
   update(@Param('id') id: string, @Body() updateOrderItenDto: UpdateOrderItenDto) {
     return this.orderItensService.update(+id, updateOrderItenDto);
   }
+
+  @Get("specify/:id")
+  async findByIdOrder(@Param('id') id: string, @Res() res : Response) {
+    try {
+      const orderItens = await this.orderItensService.findByIdOrder(+id)
+      return res.status(HttpStatus.CREATED).json({
+        data: orderItens
+      })
+    } catch (error) {
+      console.log("Erro ao listar ", error)
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: "Erro ao listar",
+        data: error.message
+      })
+    }
+  }
 }
