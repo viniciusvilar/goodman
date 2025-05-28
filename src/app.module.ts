@@ -10,6 +10,7 @@ import { OrderModule } from './order/order.module';
 import { OrderItensModule } from './order-itens/order-itens.module';
 import { PaymentModule } from './payment/payment.module';
 import { TaxModule } from './tax/tax.module';
+import { UserModule } from './user/user.module';
 
 
 @Module({
@@ -27,7 +28,7 @@ import { TaxModule } from './tax/tax.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false,
     }), 
-    ProductsModule, UnitModule, PersonModule, OrderModule, OrderItensModule, PaymentModule, TaxModule],
+    ProductsModule, UnitModule, PersonModule, OrderModule, OrderItensModule, PaymentModule, TaxModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
