@@ -4,7 +4,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response } from 'express';
 import { FindByEmailDto } from './dto/find-by-email.dto';
-import * as bcrypt from 'bcrypt';
 
 @Controller('v1/user')
 export class UserController {
@@ -13,7 +12,6 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto, @Res() res : Response) {
     try {
-      createUserDto.password = await bcrypt.hash(createUserDto.password, 10)
       const user = await this.userService.create(createUserDto)
       return res.status(HttpStatus.CREATED).json({
         data: user

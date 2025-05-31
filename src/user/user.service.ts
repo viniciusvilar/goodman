@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindByEmailDto } from './dto/find-by-email.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -14,7 +14,7 @@ export class UserService {
 
 
   async create(createUserDto: CreateUserDto) : Promise<User> {
-
+    createUserDto.password = await bcrypt.hash(createUserDto.password, 10)
     const userExist = await this.findByEmail(createUserDto.email)
 
     if (userExist) {
