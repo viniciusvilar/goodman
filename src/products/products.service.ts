@@ -24,7 +24,8 @@ export class ProductsService {
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const { unit: unitCode, tax: taxCode, ...rest} = createProductDto
 
-    const unit = await this.unitService.findByCode(unitCode)
+    const unit = await this.unitService.findOne(unitCode)
+
     const tax = await this.taxService.findOne(taxCode)
 
     if (!unit) {
@@ -69,7 +70,7 @@ export class ProductsService {
     }
   
     if (unitCode) {
-      const unit = await this.unitService.findByCode(unitCode);
+      const unit = await this.unitService.findOne(unitCode);
   
       if (!unit) {
         throw new Error('Unit not found');

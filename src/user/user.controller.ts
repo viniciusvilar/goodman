@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response } from 'express';
 import { FindByEmailDto } from './dto/find-by-email.dto';
+import { IsPublic } from 'src/auth/decorators/is-public.decorato';
 
 @Controller('v1/user')
 export class UserController {

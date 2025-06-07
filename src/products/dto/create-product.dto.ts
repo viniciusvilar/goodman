@@ -7,9 +7,8 @@ export class CreateProductDto {
     barcode: string
     @IsString()
     additionalCode: string
-    @IsString()
-    @Length(2, 2)
-    unit: string
+    @IsNumber()
+    unit: number
     @IsNumber()
     price: number
     @IsNumber()
